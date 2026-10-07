@@ -327,6 +327,171 @@
 <li><span class="text-on-surface font-semibold">좌우 반전 시 라벨도 반전</span> — 좌/우 관절 인덱스와 방향 라벨을 함께 교환합니다.</li>
 </ul>
 </div>
+<!-- Detailed initial parameters -->
+<div class="mt-space-lg flex flex-col gap-space-sm" id="pipeline-params">
+<div class="flex flex-col">
+<span class="font-label-data-sm text-label-data-sm text-secondary font-bold tracking-widest uppercase mb-1">Initial Parameters</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold">단계별 적용 조건 · 초기 파라미터</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1 leading-relaxed">현장 조사 반영 전 일반 조건 기준입니다. <span class="font-label-data-sm text-label-data-sm text-secondary bg-surface-container-lowest px-1.5 py-0.5 rounded">근거</span> 표시는 해당 기법이 필요한 현장 조사 항목 번호입니다.</p>
+</div>
+<details class="group bg-surface-container-lowest rounded-xl shadow-sm" open>
+<summary class="list-none cursor-pointer select-none p-space-md flex items-center justify-between gap-2 [&::-webkit-details-marker]:hidden">
+<div class="flex items-center gap-2"><span class="w-7 h-7 rounded-full bg-primary-fixed text-on-primary-fixed font-label-data-md text-label-data-md flex items-center justify-center font-bold">A</span><span class="font-headline-sm text-headline-sm text-on-surface">영상 단계</span><span class="font-label-data-sm text-label-data-sm text-on-surface-variant">9개 항목</span></div>
+<span class="material-symbols-outlined text-primary text-[20px] transition-transform group-open:rotate-180">expand_more</span>
+</summary>
+<div class="px-space-md pb-space-md flex flex-col md:grid md:grid-cols-2 lg:grid-cols-3 gap-space-sm">
+<div class="bg-surface-container-low rounded-lg p-space-sm flex flex-col gap-1.5">
+<div class="flex items-start justify-between gap-2"><span class="font-label-data-md text-label-data-md text-on-surface font-semibold">A1 프레임 샘플링</span><span class="flex-shrink-0 font-label-data-sm text-label-data-sm text-secondary bg-surface-container-lowest px-1.5 py-0.5 rounded">근거 3-6, 8-2</span></div>
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="text-on-surface font-semibold">적용</span> · 항상</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="text-on-surface font-semibold">초기값</span> · 추론 10~15fps (30fps 입력이면 2~3프레임마다 1회 추론)</p>
+</div>
+<div class="bg-surface-container-low rounded-lg p-space-sm flex flex-col gap-1.5">
+<div class="flex items-start justify-between gap-2"><span class="font-label-data-md text-label-data-md text-on-surface font-semibold">A2 렌즈 왜곡 보정</span><span class="flex-shrink-0 font-label-data-sm text-label-data-sm text-secondary bg-surface-container-lowest px-1.5 py-0.5 rounded">근거 3-7</span></div>
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="text-on-surface font-semibold">적용</span> · 광각·어안 렌즈일 때</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="text-on-surface font-semibold">초기값</span> · 체커보드 캘리브레이션 15~20장, 보정 맵 사전 계산</p>
+<p class="font-body-sm text-body-sm text-primary"><span class="font-semibold">저사양 대안</span> · 영상 대신 키포인트 좌표에만 보정 적용</p>
+</div>
+<div class="bg-surface-container-low rounded-lg p-space-sm flex flex-col gap-1.5">
+<div class="flex items-start justify-between gap-2"><span class="font-label-data-md text-label-data-md text-on-surface font-semibold">A3 영상 안정화</span><span class="flex-shrink-0 font-label-data-sm text-label-data-sm text-secondary bg-surface-container-lowest px-1.5 py-0.5 rounded">근거 3-5</span></div>
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="text-on-surface font-semibold">적용</span> · 이동형 거치 또는 진동이 있을 때</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="text-on-surface font-semibold">초기값</span> · 배경 특징점(ORB) 500개 기반 어파인 보정, 이동평균 반경 15프레임</p>
+</div>
+<div class="bg-surface-container-low rounded-lg p-space-sm flex flex-col gap-1.5">
+<div class="flex items-start justify-between gap-2"><span class="font-label-data-md text-label-data-md text-on-surface font-semibold">A4-1 감마 보정</span><span class="flex-shrink-0 font-label-data-sm text-label-data-sm text-secondary bg-surface-container-lowest px-1.5 py-0.5 rounded">근거 2-2, 2-3</span></div>
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="text-on-surface font-semibold">적용</span> · 저조도·역광</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="text-on-surface font-semibold">초기값</span> · 평균 밝기 80 미만일 때 감마 0.6~0.8</p>
+</div>
+<div class="bg-surface-container-low rounded-lg p-space-sm flex flex-col gap-1.5">
+<div class="flex items-start justify-between gap-2"><span class="font-label-data-md text-label-data-md text-on-surface font-semibold">A4-2 CLAHE</span><span class="flex-shrink-0 font-label-data-sm text-label-data-sm text-secondary bg-surface-container-lowest px-1.5 py-0.5 rounded">근거 2-2, 2-4</span></div>
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="text-on-surface font-semibold">적용</span> · 저조도·조명 변화</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="text-on-surface font-semibold">초기값</span> · LAB의 L 채널에만 적용, clipLimit 2.0, tileGrid 8×8</p>
+</div>
+<div class="bg-surface-container-low rounded-lg p-space-sm flex flex-col gap-1.5">
+<div class="flex items-start justify-between gap-2"><span class="font-label-data-md text-label-data-md text-on-surface font-semibold">A5-1 사람 검출 필터</span><span class="flex-shrink-0 font-label-data-sm text-label-data-sm text-secondary bg-surface-container-lowest px-1.5 py-0.5 rounded">근거 4-1, 5-3</span></div>
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="text-on-surface font-semibold">적용</span> · 타인·반사·포스터 등 오검출 요인이 있을 때</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="text-on-surface font-semibold">초기값</span> · 검출 신뢰도 0.5 이상, 최소 박스 면적 = 화면의 5% 이상</p>
+</div>
+<div class="bg-surface-container-low rounded-lg p-space-sm flex flex-col gap-1.5">
+<div class="flex items-start justify-between gap-2"><span class="font-label-data-md text-label-data-md text-on-surface font-semibold">A5-2 대상자 ID 고정</span><span class="flex-shrink-0 font-label-data-sm text-label-data-sm text-secondary bg-surface-container-lowest px-1.5 py-0.5 rounded">근거 4-1</span></div>
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="text-on-surface font-semibold">적용</span> · 타인이 등장할 때</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="text-on-surface font-semibold">초기값</span> · 이전 박스와 IoU 0.3 이상인 사람 유지, 5초간 미검출 시 재선택</p>
+</div>
+<div class="bg-surface-container-low rounded-lg p-space-sm flex flex-col gap-1.5">
+<div class="flex items-start justify-between gap-2"><span class="font-label-data-md text-label-data-md text-on-surface font-semibold">A5-3 ROI 크롭</span><span class="flex-shrink-0 font-label-data-sm text-label-data-sm text-secondary bg-surface-container-lowest px-1.5 py-0.5 rounded">근거 5-2</span></div>
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="text-on-surface font-semibold">적용</span> · 항상</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="text-on-surface font-semibold">초기값</span> · 검출 박스 기준 상하좌우 15~20% 여백 확장</p>
+</div>
+<div class="bg-surface-container-low rounded-lg p-space-sm flex flex-col gap-1.5">
+<div class="flex items-start justify-between gap-2"><span class="font-label-data-md text-label-data-md text-on-surface font-semibold">A6 얼굴 비식별화</span><span class="flex-shrink-0 font-label-data-sm text-label-data-sm text-secondary bg-surface-container-lowest px-1.5 py-0.5 rounded">근거 9-1, 9-2</span></div>
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="text-on-surface font-semibold">적용</span> · 비식별화가 필요할 때</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="text-on-surface font-semibold">초기값</span> · 반드시 포즈 추정 '후'에 적용</p>
+</div>
+</div>
+</details>
+<details class="group bg-surface-container-lowest rounded-xl shadow-sm">
+<summary class="list-none cursor-pointer select-none p-space-md flex items-center justify-between gap-2 [&::-webkit-details-marker]:hidden">
+<div class="flex items-center gap-2"><span class="w-7 h-7 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-data-md text-label-data-md flex items-center justify-center font-bold">B</span><span class="font-headline-sm text-headline-sm text-on-surface">키포인트 단계</span><span class="font-label-data-sm text-label-data-sm text-on-surface-variant">4개 항목</span></div>
+<span class="material-symbols-outlined text-secondary text-[20px] transition-transform group-open:rotate-180">expand_more</span>
+</summary>
+<div class="px-space-md pb-space-md flex flex-col md:grid md:grid-cols-2 lg:grid-cols-3 gap-space-sm">
+<div class="bg-surface-container-low rounded-lg p-space-sm flex flex-col gap-1.5">
+<div class="flex items-start justify-between gap-2"><span class="font-label-data-md text-label-data-md text-on-surface font-semibold">B1 키포인트 신뢰도 필터</span><span class="flex-shrink-0 font-label-data-sm text-label-data-sm text-secondary bg-surface-container-lowest px-1.5 py-0.5 rounded">근거 4-3, 4-4</span></div>
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="text-on-surface font-semibold">적용</span> · 헐렁한 옷·가림이 있을 때</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="text-on-surface font-semibold">초기값</span> · 신뢰도 0.3 미만이면 결측 처리 (MediaPipe visibility는 0.5)</p>
+</div>
+<div class="bg-surface-container-low rounded-lg p-space-sm flex flex-col gap-1.5">
+<div class="flex items-start justify-between gap-2"><span class="font-label-data-md text-label-data-md text-on-surface font-semibold">B2 상시 가림 관절 마스킹</span><span class="flex-shrink-0 font-label-data-sm text-label-data-sm text-secondary bg-surface-container-lowest px-1.5 py-0.5 rounded">근거 1-2, 5-1</span></div>
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="text-on-surface font-semibold">적용</span> · 책상 등으로 항상 가려지는 관절이 있을 때</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="text-on-surface font-semibold">초기값</span> · 책상 착석 시 무릎·발목 등 하체 관절을 입력에서 제외</p>
+</div>
+<div class="bg-surface-container-low rounded-lg p-space-sm flex flex-col gap-1.5">
+<div class="flex items-start justify-between gap-2"><span class="font-label-data-md text-label-data-md text-on-surface font-semibold">B3 결측 보간</span><span class="flex-shrink-0 font-label-data-sm text-label-data-sm text-secondary bg-surface-container-lowest px-1.5 py-0.5 rounded">근거 5-1</span></div>
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="text-on-surface font-semibold">적용</span> · 짧은 가림이 있을 때</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="text-on-surface font-semibold">초기값</span> · 연속 결측 0.5초 이하면 선형 보간, 초과 시 해당 구간 판정 보류</p>
+</div>
+<div class="bg-surface-container-low rounded-lg p-space-sm flex flex-col gap-1.5">
+<div class="flex items-start justify-between gap-2"><span class="font-label-data-md text-label-data-md text-on-surface font-semibold">B4 위치·스케일 정규화</span><span class="flex-shrink-0 font-label-data-sm text-label-data-sm text-secondary bg-surface-container-lowest px-1.5 py-0.5 rounded">근거 3-4, 4-2</span></div>
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="text-on-surface font-semibold">적용</span> · 항상</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="text-on-surface font-semibold">초기값</span> · 원점 = 어깨 중점 / 스케일 = 어깨 너비(정면 설치) 또는 귀-어깨 거리(측면 설치)</p>
+</div>
+</div>
+</details>
+<details class="group bg-surface-container-lowest rounded-xl shadow-sm">
+<summary class="list-none cursor-pointer select-none p-space-md flex items-center justify-between gap-2 [&::-webkit-details-marker]:hidden">
+<div class="flex items-center gap-2"><span class="w-7 h-7 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-data-md text-label-data-md flex items-center justify-center font-bold">C</span><span class="font-headline-sm text-headline-sm text-on-surface">시계열 단계</span><span class="font-label-data-sm text-label-data-sm text-on-surface-variant">5개 항목</span></div>
+<span class="material-symbols-outlined text-tertiary text-[20px] transition-transform group-open:rotate-180">expand_more</span>
+</summary>
+<div class="px-space-md pb-space-md flex flex-col md:grid md:grid-cols-2 lg:grid-cols-3 gap-space-sm">
+<div class="bg-surface-container-low rounded-lg p-space-sm flex flex-col gap-1.5">
+<div class="flex items-start justify-between gap-2"><span class="font-label-data-md text-label-data-md text-on-surface font-semibold">C1 One Euro Filter</span><span class="flex-shrink-0 font-label-data-sm text-label-data-sm text-secondary bg-surface-container-lowest px-1.5 py-0.5 rounded">근거 3-5, 6-2</span></div>
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="text-on-surface font-semibold">적용</span> · 떨림·타이핑 진동이 있을 때</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="text-on-surface font-semibold">초기값</span> · min_cutoff 1.0, beta 0.007, d_cutoff 1.0</p>
+<p class="font-body-sm text-body-sm text-primary"><span class="font-semibold">조정</span> · 떨림이 심하면 min_cutoff 0.5 / 1초 이내 반응 필요 시 beta 0.02~0.05</p>
+</div>
+<div class="bg-surface-container-low rounded-lg p-space-sm flex flex-col gap-1.5">
+<div class="flex items-start justify-between gap-2"><span class="font-label-data-md text-label-data-md text-on-surface font-semibold">C3-1 개인 캘리브레이션</span><span class="flex-shrink-0 font-label-data-sm text-label-data-sm text-secondary bg-surface-container-lowest px-1.5 py-0.5 rounded">근거 7-2</span></div>
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="text-on-surface font-semibold">적용</span> · 사용자별 기준을 쓸 때</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="text-on-surface font-semibold">초기값</span> · 시작 시 바른 자세 10초 평균을 기준선으로 등록</p>
+</div>
+<div class="bg-surface-container-low rounded-lg p-space-sm flex flex-col gap-1.5">
+<div class="flex items-start justify-between gap-2"><span class="font-label-data-md text-label-data-md text-on-surface font-semibold">C3-2 드리프트 재보정</span><span class="flex-shrink-0 font-label-data-sm text-label-data-sm text-secondary bg-surface-container-lowest px-1.5 py-0.5 rounded">근거 1-3</span></div>
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="text-on-surface font-semibold">적용</span> · 장시간 사용할 때</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="text-on-surface font-semibold">초기값</span> · '바른 자세' 판정 구간에서만 기준선 EMA 갱신, α 0.001</p>
+</div>
+<div class="bg-surface-container-low rounded-lg p-space-sm flex flex-col gap-1.5">
+<div class="flex items-start justify-between gap-2"><span class="font-label-data-md text-label-data-md text-on-surface font-semibold">C4-1 슬라이딩 윈도우</span><span class="flex-shrink-0 font-label-data-sm text-label-data-sm text-secondary bg-surface-container-lowest px-1.5 py-0.5 rounded">근거 6-3</span></div>
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="text-on-surface font-semibold">적용</span> · 항상</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="text-on-surface font-semibold">초기값</span> · 윈도우 3초, 스트라이드 1초</p>
+</div>
+<div class="bg-surface-container-low rounded-lg p-space-sm flex flex-col gap-1.5">
+<div class="flex items-start justify-between gap-2"><span class="font-label-data-md text-label-data-md text-on-surface font-semibold">C4-2 히스테리시스 판정</span><span class="flex-shrink-0 font-label-data-sm text-label-data-sm text-secondary bg-surface-container-lowest px-1.5 py-0.5 rounded">근거 6-3</span></div>
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="text-on-surface font-semibold">적용</span> · 오알림 방지</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="text-on-surface font-semibold">초기값</span> · 윈도우의 70% 이상 불량이면 불량 진입, 30% 이하면 해제</p>
+<p class="font-body-sm text-body-sm text-primary"><span class="font-semibold">알림</span> · 불량 상태가 6-3에서 정한 시간 이상 지속되면 알림</p>
+</div>
+</div>
+</details>
+<details class="group bg-surface-container-lowest rounded-xl shadow-sm">
+<summary class="list-none cursor-pointer select-none p-space-md flex items-center justify-between gap-2 [&::-webkit-details-marker]:hidden">
+<div class="flex items-center gap-2"><span class="w-7 h-7 rounded-full bg-surface-container-high text-on-surface font-label-data-md text-label-data-md flex items-center justify-center font-bold">D</span><span class="font-headline-sm text-headline-sm text-on-surface">학습 데이터 단계</span><span class="font-label-data-sm text-label-data-sm text-on-surface-variant">6개 항목</span></div>
+<span class="material-symbols-outlined text-on-surface-variant text-[20px] transition-transform group-open:rotate-180">expand_more</span>
+</summary>
+<div class="px-space-md pb-space-md flex flex-col md:grid md:grid-cols-2 lg:grid-cols-3 gap-space-sm">
+<div class="bg-surface-container-low rounded-lg p-space-sm flex flex-col gap-1.5">
+<div class="flex items-start justify-between gap-2"><span class="font-label-data-md text-label-data-md text-on-surface font-semibold">D1-1 라벨 경계 트리밍</span><span class="flex-shrink-0 font-label-data-sm text-label-data-sm text-secondary bg-surface-container-lowest px-1.5 py-0.5 rounded">근거 7-3</span></div>
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="text-on-surface font-semibold">적용</span> · 구간 단위로 라벨링할 때</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="text-on-surface font-semibold">초기값</span> · 자세 전환 경계 앞뒤 0.5초 구간은 학습에서 제외</p>
+</div>
+<div class="bg-surface-container-low rounded-lg p-space-sm flex flex-col gap-1.5">
+<div class="flex items-start justify-between gap-2"><span class="font-label-data-md text-label-data-md text-on-surface font-semibold">D1-2 라벨러 합의</span><span class="flex-shrink-0 font-label-data-sm text-label-data-sm text-secondary bg-surface-container-lowest px-1.5 py-0.5 rounded">근거 7-1</span></div>
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="text-on-surface font-semibold">적용</span> · 라벨 노이즈가 우려될 때</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="text-on-surface font-semibold">초기값</span> · 라벨러 2인 이상, Cohen's kappa 0.7 미만 구간은 재검토</p>
+</div>
+<div class="bg-surface-container-low rounded-lg p-space-sm flex flex-col gap-1.5">
+<div class="flex items-start justify-between gap-2"><span class="font-label-data-md text-label-data-md text-on-surface font-semibold">D2 데이터 분할</span><span class="flex-shrink-0 font-label-data-sm text-label-data-sm text-secondary bg-surface-container-lowest px-1.5 py-0.5 rounded">근거 10-1</span></div>
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="text-on-surface font-semibold">적용</span> · 항상 (특히 인원이 적을 때)</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="text-on-surface font-semibold">초기값</span> · 사용자 단위 분할 (Leave-One-Subject-Out 또는 GroupKFold)</p>
+<p class="font-body-sm text-body-sm text-primary"><span class="font-semibold">주의</span> · 반드시 증강 '전'에 분할</p>
+</div>
+<div class="bg-surface-container-low rounded-lg p-space-sm flex flex-col gap-1.5">
+<div class="flex items-start justify-between gap-2"><span class="font-label-data-md text-label-data-md text-on-surface font-semibold">D3-1 키포인트 증강</span><span class="flex-shrink-0 font-label-data-sm text-label-data-sm text-secondary bg-surface-container-lowest px-1.5 py-0.5 rounded">근거 10-1, 10-2</span></div>
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="text-on-surface font-semibold">적용</span> · 데이터가 부족할 때</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="text-on-surface font-semibold">초기값</span> · 회전 ±10°, 스케일 0.9~1.1, 좌표 지터 0.01, 관절 드롭아웃 10%</p>
+<p class="font-body-sm text-body-sm text-primary"><span class="font-semibold">주의</span> · 좌우 반전 시 좌/우 관절 인덱스 교환 + 방향 라벨도 함께 반전</p>
+</div>
+<div class="bg-surface-container-low rounded-lg p-space-sm flex flex-col gap-1.5">
+<div class="flex items-start justify-between gap-2"><span class="font-label-data-md text-label-data-md text-on-surface font-semibold">D3-2 영상 증강</span><span class="flex-shrink-0 font-label-data-sm text-label-data-sm text-secondary bg-surface-container-lowest px-1.5 py-0.5 rounded">근거 2-4</span></div>
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="text-on-surface font-semibold">적용</span> · 영상 입력 모델 학습 시 (원본 영상 저장이 가능할 때만)</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="text-on-surface font-semibold">초기값</span> · 밝기 ±30%, 대비 ±20%</p>
+</div>
+<div class="bg-surface-container-low rounded-lg p-space-sm flex flex-col gap-1.5">
+<div class="flex items-start justify-between gap-2"><span class="font-label-data-md text-label-data-md text-on-surface font-semibold">D4 클래스 불균형 처리</span><span class="flex-shrink-0 font-label-data-sm text-label-data-sm text-secondary bg-surface-container-lowest px-1.5 py-0.5 rounded">근거 6-4</span></div>
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="text-on-surface font-semibold">적용</span> · 바른 자세 데이터가 대부분일 때</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="text-on-surface font-semibold">초기값</span> · 클래스 가중치 = 빈도의 역수, 또는 Focal Loss (γ 2)</p>
+</div>
+</div>
+</details>
+</div>
 </section>
 <!-- Industry-Specific Modules Section -->
 <section class="flex flex-col px-gutter-mobile md:px-[max(2rem,calc((100%-1152px)/2))] py-space-lg md:py-space-xl bg-surface-container-high/40 scroll-mt-16" id="solutions">
