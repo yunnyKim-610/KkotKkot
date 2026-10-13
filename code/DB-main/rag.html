@@ -93,7 +93,7 @@
       const formatAnswer = (text) =>
         escapeHtml(text)
           .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
-          .replace(/\[(\d+)\]/g, '<span class="cite">$1</span>');
+          .replace(/\[(\d+(?:\s*,\s*\d+)*)\]/g, (_, nums) => nums.split(/\s*,\s*/).map((n) => `<span class="cite">${n}</span>`).join(""));
 
       for (const q of EXAMPLES) {
         const b = document.createElement("button");

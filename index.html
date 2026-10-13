@@ -1090,7 +1090,9 @@
     const panel = $('chat-panel'), log = $('chat-log'), input = $('chat-input'), send = $('chat-send');
     const escapeHtml = (s) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
     const cite = '<span class="inline-block min-w-[18px] px-1 mx-px rounded bg-primary-fixed text-on-primary-fixed-variant text-[11px] font-bold text-center align-[1px]">$1</span>';
-    const formatAnswer = (t) => escapeHtml(t).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\[(\d+)\]/g, cite);
+    // [1] 과 [1, 2, 5] 둘 다 번호마다 배지로 표시
+    const formatAnswer = (t) => escapeHtml(t).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\[(\d+(?:\s*,\s*\d+)*)\]/g, (_, nums) => nums.split(/\s*,\s*/).map((n) => cite.replace('$1', n)).join(''));
 
     function setOpen(open) {
       panel.classList.toggle('hidden', !open);

@@ -6,7 +6,8 @@ const GEMINI_API_KEY = Deno.env.get("GEMINI_API_KEY") ?? "";
 const EMBED_MODEL = "gemini-embedding-001";
 const DIM = 768;
 // 첫 모델이 혼잡(503)·한도 초과(429)면 다음 모델로 재시도
-const GEN_MODELS = ["gemini-flash-latest", "gemini-2.5-flash", "gemini-flash-lite-latest"];
+// flash-lite가 문서 기반 답변에 충분히 정확하고 약 1초로 가장 빠름 (flash-latest는 3~15초, gemini-2.5-flash는 신규 사용자 404)
+const GEN_MODELS = ["gemini-flash-lite-latest", "gemini-flash-latest"];
 const MATCH_THRESHOLD = 0.5;
 // 가장 비슷한 chunk가 이 값보다 낮으면 홈페이지와 무관한 질문으로 보고 답변 생성(Gemini) 없이 거절해 토큰 절약
 // 측정값: 관련 질문 0.64~0.77, 무관한 질문(날씨·주가·인사 등) 0.48~0.61
@@ -49,14 +50,16 @@ async function generateAnswer(question: string, context: string): Promise<{ answ
       parts: [{
         text:
           "당신은 자세 교정 피지컬 AI 제품 '꼿꼿 AI'의 홈페이지 안내 도우미입니다. 반드시 제공된 [참고 문서]의 내용만 근거로 한국어로 답변하세요. " +
-          "답변에 사용한 문서 번호를 [1], [2]처럼 문장 끝에 표시하세요. " +
-          "참고 문서에 답이 없으면 추측하지 말고 '제공된 문서에서 관련 내용을 찾을 수 없습니다.'라고 답하세요. " +
+          "질문이 문서와 다른 표현을 써도 뜻이 같으면 그 문서로 답하세요(예: 거북목 → 목 숙임, 구부정한 자세 → 허리 구부림·어깨 웅크림, 가격 → 도입 비용). " +
+          "문서에 관련 내용이 일부라도 있으면 그 범위에서 답하고, 전혀 없을 때만 '제공된 문서에서 관련 내용을 찾을 수 없습니다.'라고 답하세요. " +
           `꼿꼿 AI와 무관한 질문(일상 대화, 다른 주제, 코딩·숙제 도움 등)에는 다른 말 없이 '${OFF_TOPIC_ANSWER}'라고만 답하세요. ` +
+          "답변은 핵심만 3~5문장 이내로 간결하게 쓰고, 사용한 문서 번호를 [1], [2]처럼 문장 끝에 표시하세요. " +
           "각도, 시간, 금액, 비율 같은 수치는 문서 그대로 정확히 인용하세요.",
       }],
     },
     contents: [{ role: "user", parts: [{ text: `[참고 문서]\n${context}\n\n[질문]\n${question}` }] }],
-    generationConfig: { temperature: 0.2 },
+    // 생각(thinking)을 최소로 해 지연과 토큰을 줄임 (두 모델 모두 thinkingLevel "low" 지원, "minimal"은 flash-latest가 거부)
+    generationConfig: { temperature: 0.2, maxOutputTokens: 1024, thinkingConfig: { thinkingLevel: "low" } },
   };
 
   let lastError = "";
