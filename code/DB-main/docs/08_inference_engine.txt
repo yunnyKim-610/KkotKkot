@@ -1,0 +1,17 @@
+꼿꼿 AI 서비스 로봇 모듈의 추론 엔진 선정
+
+1. 선정 결과
+로봇 장착 모듈의 추론 엔진으로 ONNX Runtime과 TensorRT 실행 공급자(Execution Provider)를 선정했습니다. 모델은 ONNX 파일 하나로 관리하고, Jetson에서는 ONNX Runtime이 내부적으로 TensorRT를 호출해 GPU 가속을 받습니다. 실행 공급자 우선순위는 TensorRT, CUDA, CPU 순서입니다. 후보 엔진은 ONNX Runtime, NCNN, OpenVINO, LiteRT(구 TFLite) 네 가지였습니다.
+
+2. 선정 이유
+첫째, Jetson GPU를 제대로 쓰는 유일한 후보입니다. 네 후보 중 NVIDIA GPU와 TensorRT의 FP16·INT8 가속을 직접 쓸 수 있는 것은 ONNX Runtime뿐입니다.
+둘째, 모델 파일 하나로 모든 제품에 배포할 수 있습니다. 같은 ONNX 파일을 로봇 모듈, 개발 PC, 향후 B2C 기기에서 공통으로 쓰고, 기기마다 실행 공급자만 바꿉니다.
+셋째, 지원하지 않는 연산이 있어도 멈추지 않습니다. TensorRT가 처리하지 못하는 연산은 CUDA나 CPU로 자동으로 넘겨 실행하므로, 3D 리프팅·TCN 같은 보조 모델도 안정적으로 돌릴 수 있습니다.
+
+3. 나머지 엔진의 활용
+선정되지 않은 엔진은 버리지 않고 제품 라인별 보조 엔진으로 활용합니다.
+근로자 UWB 태그에서 쓰는 추론 엔진은 LiteRT 마이크로컨트롤러용입니다. 태그의 MCU는 메모리가 매우 작아, IMU로 몸통 기울기를 판정하는 수 KB~수십 KB 크기의 초소형 모델을 돌릴 수 있는 LiteRT가 적합합니다. 태그의 IMU 모델은 아직 선택 사항입니다.
+B2C 기기에서 쓰는 추론 엔진은 기기 종류에 따라 고릅니다. 안드로이드 앱은 LiteRT 또는 NCNN, iOS 앱은 NCNN, Intel 노트북·미니 PC는 OpenVINO를 검토합니다. 개발 PC와 서버 검증에는 로봇과 같은 ONNX 파일을 ONNX Runtime(CPU·CUDA)으로 실행합니다.
+
+4. 확정 방법
+성능 비교는 정성적 판단이며, 최종 채택은 실제 Jetson 보드 벤치마크로 확정합니다. 채택 기준은 포즈 모델 처리 속도 15fps 이상, 상위 5% 지연 100ms 이하 등입니다.

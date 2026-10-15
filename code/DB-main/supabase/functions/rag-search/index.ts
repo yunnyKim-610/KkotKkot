@@ -1,4 +1,4 @@
-// RAG 검색: 질문 임베딩 → match_chunks로 관련 chunk 검색 → Gemini로 답변 생성
+// RAG 검색: 질문 임베딩 → match_chunks(문서 조각)·match_faqs(FAQ)로 관련 내용 검색 → Gemini로 답변 생성
 // 홈페이지 공개 챗봇용 — 로그인 없이 누구나 호출하며, DB의 모든 문서(꼿꼿 AI 소개 자료)를 검색
 import { createClient } from "npm:@supabase/supabase-js@2.45.4";
 
@@ -20,6 +20,9 @@ const cors = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
+// 검색 결과 한 건: 문서 조각(doc)이면 title=문서 제목, FAQ(faq)면 title=질문·content=답변
+type Source = { type: "doc" | "faq"; id: number; title: string; content: string; similarity: number };
+
 const json = (body: unknown, status = 200) =>
   new Response(JSON.stringify(body), { status, headers: { ...cors, "Content-Type": "application/json" } });
 
@@ -91,19 +94,25 @@ Deno.serve(async (req) => {
     // 문서에 소유자(user_id)가 없어 RLS로는 보이지 않으므로 service_role로 검색 (결과는 검색된 chunk만 반환)
     const admin = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!);
     const embedding = await embedQuery(question.trim());
-    const { data: sources, error } = await admin.rpc("match_chunks", {
-      query_embedding: JSON.stringify(embedding),
-      match_count: Math.min(Math.max(Number(matchCount) || 5, 1), 10),
-      match_threshold: MATCH_THRESHOLD,
-    });
-    if (error) throw new Error(`검색 실패: ${error.message}`);
+    const count = Math.min(Math.max(Number(matchCount) || 5, 1), 10);
+    const params = { query_embedding: JSON.stringify(embedding), match_count: count, match_threshold: MATCH_THRESHOLD };
+    // 긴 문서 조각(chunks)과 FAQ(faqs)를 함께 검색한 뒤 유사도 순으로 합쳐 상위 count개만 사용
+    const [docRes, faqRes] = await Promise.all([admin.rpc("match_chunks", params), admin.rpc("match_faqs", params)]);
+    if (docRes.error) throw new Error(`문서 검색 실패: ${docRes.error.message}`);
+    if (faqRes.error) throw new Error(`FAQ 검색 실패: ${faqRes.error.message}`);
+    const sources: Source[] = [
+      ...(docRes.data ?? []).map((s: { id: number; title: string; content: string; similarity: number }) =>
+        ({ type: "doc" as const, id: s.id, title: s.title, content: s.content, similarity: s.similarity })),
+      ...(faqRes.data ?? []).map((s: { id: number; question: string; answer: string; similarity: number }) =>
+        ({ type: "faq" as const, id: s.id, title: s.question, content: s.answer, similarity: s.similarity })),
+    ].sort((a, b) => b.similarity - a.similarity).slice(0, count);
 
-    if (!sources?.length || sources[0].similarity < RELEVANCE_THRESHOLD) {
+    if (!sources.length || sources[0].similarity < RELEVANCE_THRESHOLD) {
       return json({ answer: OFF_TOPIC_ANSWER, sources: [], model: null });
     }
 
     const context = sources
-      .map((s: { title: string; content: string }, i: number) => `[${i + 1}] (${s.title}) ${s.content}`)
+      .map((s, i) => s.type === "faq" ? `[${i + 1}] (FAQ) Q: ${s.title}\nA: ${s.content}` : `[${i + 1}] (${s.title}) ${s.content}`)
       .join("\n\n");
     const { answer, model } = await generateAnswer(question.trim(), context);
 

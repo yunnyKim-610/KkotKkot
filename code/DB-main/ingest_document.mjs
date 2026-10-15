@@ -3,6 +3,7 @@
 //   - 문서의 첫 줄이 제목, 나머지가 본문
 //   - 기본: Supabase REST로 저장 (.env의 SUPABASE_KEY는 service_role 키 필요 — RLS 우회)
 //   - --sql: DB에 쓰지 않고 실행할 SQL 파일만 생성
+//   - FAQ(질문·답변 한 쌍)는 이 스크립트가 아니라 ingest_faq.mjs로 faqs 테이블에 저장
 import { readFileSync, writeFileSync } from "node:fs";
 
 try {
@@ -82,6 +83,7 @@ async function embed(texts, title) {
 
 // ---------- 실행 ----------
 const [title, ...rest] = readFileSync(file, "utf8").replace(/^﻿/, "").split(/\r?\n/);
+if (/^FAQ:/.test(title.trim())) { console.error("FAQ는 faqs 테이블에 저장합니다: node ingest_faq.mjs <faq.csv>"); process.exit(1); }
 const chunks = chunkText(rest.join("\n"));
 console.log(`제목: ${title.trim()}\nchunk ${chunks.length}개 (길이: ${chunks.map((c) => c.length).join(", ")})`);
 const vectors = await embed(chunks, title.trim());

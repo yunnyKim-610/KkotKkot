@@ -9,6 +9,9 @@
   <h2>📄 내 DB에 저장된 문서 목록</h2>
   <ul id="document-list">데이터를 불러오는 중...</ul>
 
+  <h2>❓ FAQ 목록</h2>
+  <ul id="faq-list">데이터를 불러오는 중...</ul>
+
   <script>
     // 1. 수강생 본인의 Supabase URL과 Anon Key 복사해서 넣기
     const SUPABASE_URL = "https://hzjigjfgdaytvwytesxu.supabase.co";
@@ -38,7 +41,30 @@
       });
     }
 
+    // 3. faqs 테이블의 질문·답변 조회 (FAQ는 쪼개지 않고 한 행에 저장)
+    async function loadFaqs() {
+      const { data, error } = await supabaseClient
+        .from("faqs")
+        .select("id, question, answer")
+        .order("id");
+      const listEl = document.getElementById('faq-list');
+      listEl.innerHTML = '';
+
+      if (error) {
+        listEl.innerHTML = `<li>오류 발생: ${error.message}</li>`;
+        return;
+      }
+
+      data.forEach(faq => {
+        const li = document.createElement('li');
+        li.style.marginBottom = '10px';
+        li.innerHTML = `<strong>[ID: ${faq.id}] ${faq.question}</strong><br>${faq.answer}`;
+        listEl.appendChild(li);
+      });
+    }
+
     loadDocuments();
+    loadFaqs();
   </script>
 </body>
 </html>

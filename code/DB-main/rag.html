@@ -133,7 +133,7 @@
             div.className = "source";
             div.innerHTML = `
               <div class="source-head">
-                <span><span class="cite">${i + 1}</span> ${escapeHtml(s.title)}</span>
+                <span><span class="cite">${i + 1}</span> ${s.type === "faq" ? "FAQ · " : ""}${escapeHtml(s.title)}</span>
                 <span class="score">유사도 ${(s.similarity * 100).toFixed(1)}%</span>
               </div>
               <p>${escapeHtml(s.content)}</p>`;

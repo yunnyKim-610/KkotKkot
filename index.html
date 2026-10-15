@@ -1232,6 +1232,26 @@
 <div class="bg-surface-container-low rounded-lg p-space-sm flex flex-col gap-1"><span class="font-label-data-sm text-label-data-sm text-error font-bold">쓰지 않는 이유</span><ul class="flex flex-col gap-1 text-on-surface-variant leading-relaxed"><li class="flex gap-2"><span class="text-error">•</span><span>사원증·이름표를 읽는 용도는 얼굴 인식 없이 UWB로 익명 매칭한다는 설계 원칙을 스스로 깨는 일</span></li><li class="flex gap-2"><span class="text-error">•</span><span>로봇 위치는 지도로 이미 알고 있어 구역 표지판을 읽을 필요도 없음</span></li></ul></div>
 </article>
 </div>
+<!-- Inference engine: selection summary -->
+<div class="flex flex-col mt-space-xl mb-space-md scroll-mt-16" id="inference">
+<span class="font-label-data-sm text-label-data-sm text-secondary font-bold tracking-widest uppercase mb-1">Inference Engine</span>
+<h3 class="font-headline-md text-headline-md text-on-surface font-bold tracking-tight">추론 엔진: ONNX Runtime + TensorRT</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2 leading-relaxed">로봇 장착 모듈의 추론 엔진으로 ONNX Runtime과 TensorRT 실행 공급자를 선정했습니다. 모델은 ONNX 파일 하나로 관리하고, Jetson에서는 ONNX Runtime이 내부적으로 TensorRT를 호출해 GPU 가속을 받습니다.</p>
+<div class="flex flex-wrap items-center gap-1.5 mt-space-sm"><span class="font-label-data-sm text-label-data-sm text-on-surface-variant mr-1">실행 공급자 우선순위</span><span class="bg-primary-fixed text-on-primary-fixed px-2 py-0.5 rounded-full text-[11px] font-label-data-sm font-semibold">TensorRT</span><span class="material-symbols-outlined text-outline text-[16px]">arrow_forward</span><span class="bg-secondary-fixed text-on-secondary-fixed px-2 py-0.5 rounded-full text-[11px] font-label-data-sm font-semibold">CUDA</span><span class="material-symbols-outlined text-outline text-[16px]">arrow_forward</span><span class="bg-surface-container-highest text-on-surface-variant px-2 py-0.5 rounded-full text-[11px] font-label-data-sm font-semibold">CPU</span></div>
+</div>
+<ol class="flex flex-col gap-space-sm md:grid md:grid-cols-3 md:gap-space-md">
+<li class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col gap-1"><div class="flex items-center gap-2"><span class="w-6 h-6 rounded-full bg-primary-fixed text-on-primary-fixed font-label-data-sm text-label-data-sm flex items-center justify-center font-bold">1</span><span class="font-label-data-lg text-label-data-lg text-on-surface">Jetson GPU를 제대로 쓰는 유일한 후보</span></div><p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">네 후보 중 NVIDIA GPU와 TensorRT의 FP16·INT8 가속을 직접 쓸 수 있는 것은 ONNX Runtime뿐입니다.</p></li>
+<li class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col gap-1"><div class="flex items-center gap-2"><span class="w-6 h-6 rounded-full bg-primary-fixed text-on-primary-fixed font-label-data-sm text-label-data-sm flex items-center justify-center font-bold">2</span><span class="font-label-data-lg text-label-data-lg text-on-surface">모델 파일 하나로 모든 제품에 배포</span></div><p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">같은 ONNX 파일을 로봇 모듈, 개발 PC, 향후 B2C 기기에서 공통으로 쓰고, 기기마다 실행 공급자만 바꿉니다.</p></li>
+<li class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col gap-1"><div class="flex items-center gap-2"><span class="w-6 h-6 rounded-full bg-primary-fixed text-on-primary-fixed font-label-data-sm text-label-data-sm flex items-center justify-center font-bold">3</span><span class="font-label-data-lg text-label-data-lg text-on-surface">지원하지 않는 연산이 있어도 멈추지 않음</span></div><p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">TensorRT가 처리하지 못하는 연산은 CUDA나 CPU로 자동으로 넘겨 실행하므로, 3D 리프팅·TCN 같은 보조 모델도 안정적으로 돌릴 수 있습니다.</p></li>
+</ol>
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col gap-2 mt-space-sm md:mt-space-md">
+<div class="flex items-center gap-2"><span class="material-symbols-outlined text-secondary text-[20px]">devices</span><span class="font-label-data-lg text-label-data-lg text-on-surface">나머지 엔진은 제품 라인별 보조 엔진으로 활용</span></div>
+<div class="flex flex-col gap-2 md:flex-row md:gap-space-lg font-body-sm text-body-sm text-on-surface-variant">
+<div class="flex flex-wrap items-center gap-1.5"><span>근로자 태그 MCU</span><span class="bg-tertiary-fixed text-on-tertiary-fixed px-2 py-0.5 rounded-full text-[11px] font-label-data-sm font-semibold">LiteRT (마이크로컨트롤러용)</span></div>
+<div class="flex flex-wrap items-center gap-1.5"><span>B2C 기기 (기기 종류에 따라)</span><span class="bg-secondary-fixed text-on-secondary-fixed px-2 py-0.5 rounded-full text-[11px] font-label-data-sm font-semibold">LiteRT</span><span class="bg-secondary-fixed text-on-secondary-fixed px-2 py-0.5 rounded-full text-[11px] font-label-data-sm font-semibold">NCNN</span><span class="bg-secondary-fixed text-on-secondary-fixed px-2 py-0.5 rounded-full text-[11px] font-label-data-sm font-semibold">OpenVINO</span></div>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-outline mt-space-sm leading-relaxed">※ 성능 비교는 정성적 판단이며, 최종 채택은 실제 Jetson 보드 벤치마크(처리 속도 15fps 이상, 상위 5% 지연 100ms 이하 등)로 확정합니다.</p>
 </section>
 <!-- Final Call-to-Action Card -->
 <section class="flex flex-col px-gutter-mobile md:px-[max(2rem,calc((100%-1152px)/2))] py-space-xl">
@@ -1388,7 +1408,7 @@
     function renderSources(sources) {
       if (!sources || !sources.length) return '';
       const items = sources.map((s, i) =>
-        '<li class="flex justify-between gap-2"><span class="truncate">' + cite.replace('$1', i + 1) + ' ' + escapeHtml(s.title) +
+        '<li class="flex justify-between gap-2"><span class="truncate">' + cite.replace('$1', i + 1) + ' ' + (s.type === 'faq' ? 'FAQ · ' : '') + escapeHtml(s.title) +
         '</span><span class="flex-shrink-0 text-outline">' + (s.similarity * 100).toFixed(0) + '%</span></li>').join('');
       return '<details class="mt-2 pt-2 border-t border-outline-variant/50 whitespace-normal"><summary class="cursor-pointer font-label-data-sm text-label-data-sm text-on-surface-variant">참고한 문서 ' + sources.length + '개</summary><ul class="mt-1.5 flex flex-col gap-1 font-body-sm text-body-sm text-on-surface-variant">' + items + '</ul></details>';
     }
