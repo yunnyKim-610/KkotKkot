@@ -8,7 +8,7 @@
   </style>
   </head><body class="scroll-smooth break-keep bg-surface text-on-surface font-body-md text-body-md flex flex-col min-h-screen selection:bg-secondary-fixed selection:text-on-secondary-fixed"><header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl pt-safe shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-gutter-mobile md:px-[max(2rem,calc((100%-1152px)/2))] flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm min-w-0"><img alt="꼿꼿 AI Logo" class="h-8 w-auto object-contain flex-shrink-0" src="https://lh3.googleusercontent.com/aida/AEtjO1WiL2Dnqqy5j1ZbdG6ie-rX4Fvjgbx-ovlntXFwuOwoabPo7-k1KCiPnfHVSB8R1iq1_34xDQ4J-mKTiG8xmoe8G_1926VOSAX7-C51ypumaTMpbMy47uio3ckvyyYDfj9mMnyvUqhigfaeUyR6zG4LQh3MmvyIgyw1LCN8UvHxY9Kp7WQqbgVhHu9s7fAd1YyRQi05hwbwdDaYRWk8Hs97p_hH_Lp_Q3w9qq7iyZF6bg"/><div class="flex flex-col min-w-0"><span class="font-headline-sm text-headline-sm text-on-surface truncate">꼿꼿 AI</span><span class="font-label-data-sm text-label-data-sm text-on-surface-variant truncate uppercase">Overview Landing</span></div></div><nav class="hidden md:flex items-center gap-space-lg font-label-data-md text-label-data-md text-on-surface-variant" aria-label="주요 메뉴"><a class="text-primary font-semibold" href="#overview">소개</a><a class="hover:text-on-surface transition-colors" href="#inference">AI 엔진</a><a class="hover:text-on-surface transition-colors" href="#pipeline">전처리</a><a class="hover:text-on-surface transition-colors" href="#impact">분석 지표</a><a class="hover:text-on-surface transition-colors" href="#solutions">솔루션</a><a class="hover:text-on-surface transition-colors" href="#robot">로봇 모듈</a><a class="hover:text-on-surface transition-colors" href="#hardware">하드웨어</a><a class="hover:text-on-surface transition-colors" href="#software">소프트웨어</a><a class="hover:text-on-surface transition-colors" href="#model">메인 모델</a></nav><div class="flex items-center gap-space-sm flex-shrink-0"><a class="h-9 px-3.5 rounded-full bg-primary-container text-on-primary font-label-data-md text-label-data-md flex items-center justify-center transition-all hover:bg-primary shadow-[0_4px_12px_rgba(37,99,235,0.2)] active:scale-95" data-path="contact-demo" href="#"><span>도입 문의</span></a><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex flex-col relative w-full pt-16 bg-surface pb-24 md:pb-0"><div class="flex flex-col w-full">
 <!-- Hero Section -->
-<section class="flex flex-col px-gutter-mobile md:px-[max(2rem,calc((100%-1152px)/2))] pt-space-md pb-space-lg lg:pt-space-xl lg:pb-space-xl lg:grid lg:grid-cols-2 lg:gap-x-space-xl lg:items-center scroll-mt-16" id="overview">
+<section class="flex flex-col px-gutter-mobile md:px-[max(2rem,calc((100%-1152px)/2))] pt-space-md pb-space-lg lg:pt-space-xl lg:pb-space-xl scroll-mt-16" id="overview">
 <div class="flex flex-col">
 <!-- Category Badge -->
 <div class="flex items-center gap-space-xs self-start bg-secondary-fixed text-on-secondary-fixed px-3 py-1 rounded-full mb-space-sm shadow-sm">
@@ -30,93 +30,48 @@
 <span>도입 상담 신청</span>
 <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
 </a>
-<button class="py-3 px-4 bg-surface-container-high text-on-surface rounded-xl font-label-data-md text-label-data-md font-medium text-center hover:bg-surface-container-highest active:scale-95 transition-transform flex items-center justify-center gap-1.5 shadow-sm" id="toggle-sim-btn">
-<span class="material-symbols-outlined text-[18px] text-primary">play_arrow</span>
-<span>시뮬레이션</span>
-</button>
 </div>
 </div>
-<!-- Live Telemetry Card -->
-<div class="w-full bg-surface-container-lowest rounded-xl p-space-md shadow-md flex flex-col gap-space-md relative overflow-hidden">
-<!-- Glow ambient background element -->
-<div class="absolute -top-12 -right-12 w-44 h-44 rounded-full bg-secondary-container/20 blur-2xl pointer-events-none"></div>
-<!-- Card Header Status -->
-<div class="flex items-center justify-between z-10">
-<div class="flex items-center gap-2">
-<span class="w-2.5 h-2.5 rounded-full bg-tertiary animate-pulse"></span>
-<span class="font-label-data-sm text-label-data-sm text-on-surface-variant tracking-wider uppercase">Live Biometric Feed</span>
-</div>
-<div class="flex items-center gap-1.5 bg-surface-container px-2.5 py-1 rounded-full">
-<span class="material-symbols-outlined text-[15px] text-primary">verified</span>
-<span class="font-label-data-md text-label-data-md font-bold text-primary" id="score-text">92점 (우수)</span>
-</div>
-</div>
-<!-- Biomechanical Visualizer Canvas Area -->
-<div class="relative w-full h-48 lg:h-72 bg-surface-container-low rounded-lg overflow-hidden flex items-center justify-center">
-<!-- Grid overlay pattern -->
-<div class="absolute inset-0 bg-[radial-gradient(#2563eb_0.75px,transparent_0.75px)] [background-size:14px_14px] opacity-15"></div>
-<!-- Skeleton Wireframe SVG -->
-<svg class="w-40 h-44 lg:w-56 lg:h-64 z-10 transition-all duration-500" fill="none" viewbox="0 0 160 176" xmlns="http://www.w3.org/2000/svg">
-<!-- Spine & Bone Link Vectors -->
-<!-- Head to Cervical -->
-<line stroke="#00687a" stroke-dasharray="2 2" stroke-linecap="round" stroke-width="2" x1="80" x2="80" y1="28" y2="44"></line>
-<!-- Cervical to Left Shoulder -->
-<line stroke="#2563eb" stroke-linecap="round" stroke-width="2.5" x1="80" x2="48" y1="44" y2="58"></line>
-<!-- Cervical to Right Shoulder -->
-<line stroke="#2563eb" stroke-linecap="round" stroke-width="2.5" x1="80" x2="112" y1="44" y2="58"></line>
-<!-- Cervical to Thoracic (C-spine to T-spine) -->
-<line stroke="#2563eb" stroke-linecap="round" stroke-width="3" x1="80" x2="80" y1="44" y2="82"></line>
-<!-- Thoracic to Lumbar (T-spine to L-spine) -->
-<line id="spine-vector" stroke="#2563eb" stroke-linecap="round" stroke-width="3" x1="80" x2="80" y1="82" y2="120"></line>
-<!-- Lumbar to Pelvis Left/Right -->
-<line stroke="#00687a" stroke-linecap="round" stroke-width="2" x1="80" x2="56" y1="120" y2="148"></line>
-<line stroke="#00687a" stroke-linecap="round" stroke-width="2" x1="80" x2="104" y1="120" y2="148"></line>
-<!-- Nodes: Head -->
-<circle cx="80" cy="20" fill="#eff4ff" r="10" stroke="#2563eb" stroke-width="2"></circle>
-<!-- Node 1: 경추 (Cervical Spine) -->
-<circle class="transition-colors duration-300" cx="80" cy="44" fill="#2563eb" id="node-cervical" r="5" stroke="#ffffff" stroke-width="2"></circle>
-<!-- Node 2: 좌측 견갑 (Left Shoulder) -->
-<circle cx="48" cy="58" fill="#00687a" id="node-shoulder-l" r="4.5" stroke="#ffffff" stroke-width="2"></circle>
-<!-- Node 3: 우측 견갑 (Right Shoulder) -->
-<circle cx="112" cy="58" fill="#00687a" id="node-shoulder-r" r="4.5" stroke="#ffffff" stroke-width="2"></circle>
-<!-- Node 4: 흉추 (Thoracic Spine) -->
-<circle cx="80" cy="82" fill="#2563eb" id="node-thoracic" r="5" stroke="#ffffff" stroke-width="2"></circle>
-<!-- Node 5: 요추 (Lumbar Spine - Alert Target) -->
-<circle class="transition-colors duration-300" cx="80" cy="120" fill="#007d55" id="node-lumbar" r="6" stroke="#ffffff" stroke-width="2.5"></circle>
-<!-- Hip anchor points -->
-<circle cx="56" cy="148" fill="#737686" r="4" stroke="#ffffff" stroke-width="1.5"></circle>
-<circle cx="104" cy="148" fill="#737686" r="4" stroke="#ffffff" stroke-width="1.5"></circle>
-</svg>
-<!-- Dynamic Joint Overlay Badges -->
-<div class="absolute top-2 left-2 flex flex-col gap-1 z-20">
-<span class="bg-surface-container-lowest/90 px-2 py-0.5 rounded text-[10px] font-label-data-sm text-on-surface-variant font-medium shadow-sm">
-            목 숙임: 11° (정상)
-          </span>
-<span class="bg-surface-container-lowest/90 px-2 py-0.5 rounded text-[10px] font-label-data-sm text-tertiary font-medium shadow-sm transition-colors duration-300" id="lumbar-degree-badge">
-            허리 굽힘: 4° (안정)
-          </span>
-</div>
-<div class="absolute bottom-2 right-2 flex items-center gap-1 z-20 bg-surface-container-lowest/90 px-2 py-1 rounded-full shadow-sm">
-<span class="material-symbols-outlined text-[13px] text-secondary">videocam</span>
-<span class="font-label-data-sm text-[10px] text-on-surface font-semibold tracking-wider">15 FPS EDGE VISION</span>
-</div>
-</div>
-<!-- Haptic Band Feedback Notification Banner -->
-<div class="w-full bg-surface-container-low rounded-lg p-space-sm flex items-start gap-space-sm transition-colors duration-300" id="haptic-banner">
-<div class="w-8 h-8 rounded-full bg-secondary-fixed text-on-secondary-fixed flex items-center justify-center flex-shrink-0 transition-colors duration-300" id="haptic-icon-box">
-<span class="material-symbols-outlined text-[18px]" id="haptic-icon">emergency_heat</span>
-</div>
-<div class="flex flex-col min-w-0">
-<div class="flex items-center gap-1.5">
-<span class="font-label-data-md text-label-data-md font-semibold text-on-surface" id="haptic-title">현장 경광등·부저 연동</span>
-<span class="font-label-data-sm text-[10px] px-1.5 py-0.2 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-semibold" id="haptic-chip">정상 감지</span>
-</div>
-<p class="font-body-sm text-body-sm text-on-surface-variant truncate" id="haptic-desc">
-            바른 자세 유지 중 • 경광등 소등 대기
-          </p>
-</div>
-</div>
-</div>
+</section>
+<!-- 근로자용 앱 화면 소개: 이미지는 images/app-*.png -->
+<section class="app-screens">
+  <style>
+    .app-screens { max-width: 1120px; margin: 0 auto; padding: 48px 16px; font-family: inherit; color: #1D272C; }
+    .app-screens h2 { font-size: 28px; line-height: 1.3; margin: 0 0 8px; }
+    .app-screens .lede { margin: 0 0 32px; font-size: 16px; line-height: 1.6; color: #4E5B62; max-width: 640px; }
+    .app-screens .grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; }
+    @media (max-width: 900px) { .app-screens .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 480px) { .app-screens .grid { gap: 16px; } }
+    .app-screens figure { margin: 0; display: flex; flex-direction: column; gap: 12px; }
+    .app-screens img { display: block; width: 100%; height: auto; border-radius: 24px; border: 1px solid #CBD3D7; background: #F4F6F7; }
+    .app-screens figcaption strong { display: block; font-size: 16px; font-weight: 600; margin-bottom: 2px; }
+    .app-screens figcaption span { font-size: 14px; line-height: 1.55; color: #4E5B62; }
+    .app-screens .note { margin: 24px 0 0; font-size: 13px; color: #4E5B62; }
+  </style>
+
+  <h2>근로자용 앱 미리보기</h2>
+  <p class="lede">태그를 착용한 근로자는 앱에서 오늘의 자세와 알림 기록을 확인하고, 바른 자세 코칭을 받을 수 있습니다. 내 기록은 내 휴대폰에서만 볼 수 있습니다.</p>
+
+  <div class="grid">
+    <figure>
+      <img src="images/app-home.png" alt="홈 화면: 오늘 바른 자세 비율, 받은 알림 수, 태그 연결 상태, 오늘의 코칭" width="390" height="844" loading="lazy">
+      <figcaption><strong>홈</strong><span>오늘의 바른 자세 비율과 태그 상태를 한눈에 봅니다.</span></figcaption>
+    </figure>
+    <figure>
+      <img src="images/app-alerts.png" alt="알림 기록 화면: 최근 7일 바른 자세 그래프와 날짜별 알림 목록" width="390" height="844" loading="lazy">
+      <figcaption><strong>알림 기록</strong><span>언제, 어떤 자세로 알림을 받았는지 돌아봅니다.</span></figcaption>
+    </figure>
+    <figure>
+      <img src="images/app-coaching.png" alt="코칭 화면: 구부정하게 앉기와 바르게 앉기 비교 그림, 바르게 앉는 3단계" width="390" height="844" loading="lazy">
+      <figcaption><strong>코칭</strong><span>바르게 앉는 방법을 그림과 단계로 안내합니다.</span></figcaption>
+    </figure>
+    <figure>
+      <img src="images/app-privacy.png" alt="개인정보와 설정 화면: 앱이 아는 것과 모르는 것, 코칭 참여와 진동 세기 설정" width="390" height="844" loading="lazy">
+      <figcaption><strong>개인정보와 설정</strong><span>앱이 아는 것과 모르는 것을 확인하고, 참여를 직접 정합니다.</span></figcaption>
+    </figure>
+  </div>
+
+  <p class="note">현재 개발 중인 화면으로, 표시된 수치는 예시입니다.</p>
 </section>
 <!-- PRD Overview: Problem / Scenario / Criteria / Goals / Scope / ROI -->
 <section class="flex flex-col px-gutter-mobile md:px-[max(2rem,calc((100%-1152px)/2))] py-space-lg md:py-space-xl bg-surface scroll-mt-16" id="overview-prd">
@@ -1387,71 +1342,7 @@
 </div>
 </section>
 </div>
-<script>
-  (function () {
-    const toggleBtn = document.getElementById('toggle-sim-btn');
-    const scoreText = document.getElementById('score-text');
-    const nodeLumbar = document.getElementById('node-lumbar');
-    const spineVector = document.getElementById('spine-vector');
-    const lumbarBadge = document.getElementById('lumbar-degree-badge');
-    const hapticBanner = document.getElementById('haptic-banner');
-    const hapticIconBox = document.getElementById('haptic-icon-box');
-    const hapticIcon = document.getElementById('haptic-icon');
-    const hapticTitle = document.getElementById('haptic-title');
-    const hapticChip = document.getElementById('haptic-chip');
-    const hapticDesc = document.getElementById('haptic-desc');
-
-    let isMisaligned = false;
-
-    if (toggleBtn) {
-      toggleBtn.addEventListener('click', function () {
-        isMisaligned = !isMisaligned;
-
-        if (isMisaligned) {
-          // Bad Posture Simulation State
-          scoreText.textContent = '68점 (주의)';
-          scoreText.className = 'font-label-data-md text-label-data-md font-bold text-error';
-
-          nodeLumbar.setAttribute('fill', '#ba1a1a');
-          nodeLumbar.setAttribute('cx', '104');
-          spineVector.setAttribute('x2', '104');
-          spineVector.setAttribute('stroke', '#ba1a1a');
-
-          lumbarBadge.textContent = '허리 굽힘: 34° (30° 초과)';
-          lumbarBadge.className = 'bg-error-container text-on-error-container px-2 py-0.5 rounded text-[10px] font-label-data-sm font-semibold shadow-sm transition-colors duration-300';
-
-          hapticBanner.className = 'w-full bg-error-container rounded-lg p-space-sm flex items-start gap-space-sm transition-colors duration-300';
-          hapticIconBox.className = 'w-8 h-8 rounded-full bg-error text-on-error flex items-center justify-center flex-shrink-0 animate-bounce transition-colors duration-300';
-          hapticIcon.textContent = 'warning';
-          hapticTitle.textContent = '경광등 점등 · 부저 송출';
-          hapticChip.textContent = '허리 구부림';
-          hapticChip.className = 'font-label-data-sm text-[10px] px-1.5 py-0.2 rounded-full bg-error text-on-error font-semibold';
-          hapticDesc.textContent = '30° 초과 10초 이상 지속 • MQTT로 구역 제어기에 신호';
-        } else {
-          // Good Posture State
-          scoreText.textContent = '92점 (우수)';
-          scoreText.className = 'font-label-data-md text-label-data-md font-bold text-primary';
-
-          nodeLumbar.setAttribute('fill', '#007d55');
-          nodeLumbar.setAttribute('cx', '80');
-          spineVector.setAttribute('x2', '80');
-          spineVector.setAttribute('stroke', '#2563eb');
-
-          lumbarBadge.textContent = '허리 굽힘: 4° (안정)';
-          lumbarBadge.className = 'bg-surface-container-lowest/90 px-2 py-0.5 rounded text-[10px] font-label-data-sm text-tertiary font-medium shadow-sm transition-colors duration-300';
-
-          hapticBanner.className = 'w-full bg-surface-container-low rounded-lg p-space-sm flex items-start gap-space-sm transition-colors duration-300';
-          hapticIconBox.className = 'w-8 h-8 rounded-full bg-secondary-fixed text-on-secondary-fixed flex items-center justify-center flex-shrink-0 transition-colors duration-300';
-          hapticIcon.textContent = 'emergency_heat';
-          hapticTitle.textContent = '현장 경광등·부저 연동';
-          hapticChip.textContent = '정상 감지';
-          hapticChip.className = 'font-label-data-sm text-[10px] px-1.5 py-0.2 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-semibold';
-          hapticDesc.textContent = '바른 자세 유지 중 • 경광등 소등 대기';
-        }
-      });
-    }
-  })();
-</script><footer class="w-full bg-surface-container-low px-gutter-mobile md:px-[max(2rem,calc((100%-1152px)/2))] py-space-lg mt-space-xl flex flex-col gap-space-md"><div class="flex items-center justify-between"><div class="flex items-center gap-space-xs"><img alt="꼿꼿 AI Logo" class="h-6 w-auto object-contain opacity-75" src="https://lh3.googleusercontent.com/aida/AEtjO1WiL2Dnqqy5j1ZbdG6ie-rX4Fvjgbx-ovlntXFwuOwoabPo7-k1KCiPnfHVSB8R1iq1_34xDQ4J-mKTiG8xmoe8G_1926VOSAX7-C51ypumaTMpbMy47uio3ckvyyYDfj9mMnyvUqhigfaeUyR6zG4LQh3MmvyIgyw1LCN8UvHxY9Kp7WQqbgVhHu9s7fAd1YyRQi05hwbwdDaYRWk8Hs97p_hH_Lp_Q3w9qq7iyZF6bg"/><span class="font-headline-sm text-headline-sm text-on-surface">꼿꼿 AI</span></div><span class="font-label-data-sm text-label-data-sm text-secondary px-2 py-0.5 rounded-full bg-surface">Edge Vision MVP</span></div><p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">(주)피지컬에이아이 | 대표이사: 건강한<br/>사업자등록번호: 220-88-00124 | 통신판매업신고: 제2024-서울강남-0412호<br/>서울특별시 강남구 테헤란로 152 강남파이낸스센터 18층</p><div class="flex items-center gap-space-md font-label-data-sm text-label-data-sm text-on-surface-variant"><a class="hover:text-primary transition-colors" href="#">이용약관</a><a class="hover:text-primary transition-colors font-bold text-on-surface" href="#">개인정보처리방침</a><a class="hover:text-primary transition-colors" href="#">보안 인증 보고서</a></div><p class="font-label-data-sm text-label-data-sm text-outline">© 2024 KKOTKKOT AI Inc. All rights reserved. High-Precision Physical AI Ergonomics Engine.</p></footer></main><nav class="md:hidden fixed bottom-0 w-full z-50 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-1px_8px_rgba(0,0,0,0.04)]" data-active-classes="text-primary font-headline-sm"><div class="flex justify-around items-center h-16 px-space-xs"><a aria-current="page" class="flex flex-col items-center justify-center gap-0.5 min-w-[56px] min-h-[44px] transition-colors text-primary font-headline-sm" data-path="overview-landing" href="#overview"><span class="material-symbols-outlined text-[22px]">view_quilt</span><span class="font-label-data-sm text-label-data-sm">소개</span></a><a class="flex flex-col items-center justify-center gap-0.5 min-w-[56px] min-h-[44px] text-on-surface-variant hover:text-on-surface transition-colors" data-path="product-features" href="#inference"><span class="material-symbols-outlined text-[22px]">biotech</span><span class="font-label-data-sm text-label-data-sm">AI 엔진</span></a><a class="flex flex-col items-center justify-center gap-0.5 min-w-[56px] min-h-[44px] text-on-surface-variant hover:text-on-surface transition-colors" data-path="preprocessing-pipeline" href="#pipeline"><span class="material-symbols-outlined text-[22px]">account_tree</span><span class="font-label-data-sm text-label-data-sm">전처리</span></a><a class="flex flex-col items-center justify-center gap-0.5 min-w-[56px] min-h-[44px] text-on-surface-variant hover:text-on-surface transition-colors" data-path="ergonomic-telemetry" href="#impact"><span class="material-symbols-outlined text-[22px]">monitoring</span><span class="font-label-data-sm text-label-data-sm">분석 지표</span></a><a class="flex flex-col items-center justify-center gap-0.5 min-w-[56px] min-h-[44px] text-on-surface-variant hover:text-on-surface transition-colors" data-path="enterprise-solutions" href="#solutions"><span class="material-symbols-outlined text-[22px]">corporate_fare</span><span class="font-label-data-sm text-label-data-sm">솔루션</span></a></div></nav>
+<footer class="w-full bg-surface-container-low px-gutter-mobile md:px-[max(2rem,calc((100%-1152px)/2))] py-space-lg mt-space-xl flex flex-col gap-space-md"><div class="flex items-center justify-between"><div class="flex items-center gap-space-xs"><img alt="꼿꼿 AI Logo" class="h-6 w-auto object-contain opacity-75" src="https://lh3.googleusercontent.com/aida/AEtjO1WiL2Dnqqy5j1ZbdG6ie-rX4Fvjgbx-ovlntXFwuOwoabPo7-k1KCiPnfHVSB8R1iq1_34xDQ4J-mKTiG8xmoe8G_1926VOSAX7-C51ypumaTMpbMy47uio3ckvyyYDfj9mMnyvUqhigfaeUyR6zG4LQh3MmvyIgyw1LCN8UvHxY9Kp7WQqbgVhHu9s7fAd1YyRQi05hwbwdDaYRWk8Hs97p_hH_Lp_Q3w9qq7iyZF6bg"/><span class="font-headline-sm text-headline-sm text-on-surface">꼿꼿 AI</span></div><span class="font-label-data-sm text-label-data-sm text-secondary px-2 py-0.5 rounded-full bg-surface">Edge Vision MVP</span></div><p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">(주)피지컬에이아이 | 대표이사: 건강한<br/>사업자등록번호: 220-88-00124 | 통신판매업신고: 제2024-서울강남-0412호<br/>서울특별시 강남구 테헤란로 152 강남파이낸스센터 18층</p><div class="flex items-center gap-space-md font-label-data-sm text-label-data-sm text-on-surface-variant"><a class="hover:text-primary transition-colors" href="#">이용약관</a><a class="hover:text-primary transition-colors font-bold text-on-surface" href="#">개인정보처리방침</a><a class="hover:text-primary transition-colors" href="#">보안 인증 보고서</a></div><p class="font-label-data-sm text-label-data-sm text-outline">© 2024 KKOTKKOT AI Inc. All rights reserved. High-Precision Physical AI Ergonomics Engine.</p></footer></main><nav class="md:hidden fixed bottom-0 w-full z-50 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-1px_8px_rgba(0,0,0,0.04)]" data-active-classes="text-primary font-headline-sm"><div class="flex justify-around items-center h-16 px-space-xs"><a aria-current="page" class="flex flex-col items-center justify-center gap-0.5 min-w-[56px] min-h-[44px] transition-colors text-primary font-headline-sm" data-path="overview-landing" href="#overview"><span class="material-symbols-outlined text-[22px]">view_quilt</span><span class="font-label-data-sm text-label-data-sm">소개</span></a><a class="flex flex-col items-center justify-center gap-0.5 min-w-[56px] min-h-[44px] text-on-surface-variant hover:text-on-surface transition-colors" data-path="product-features" href="#inference"><span class="material-symbols-outlined text-[22px]">biotech</span><span class="font-label-data-sm text-label-data-sm">AI 엔진</span></a><a class="flex flex-col items-center justify-center gap-0.5 min-w-[56px] min-h-[44px] text-on-surface-variant hover:text-on-surface transition-colors" data-path="preprocessing-pipeline" href="#pipeline"><span class="material-symbols-outlined text-[22px]">account_tree</span><span class="font-label-data-sm text-label-data-sm">전처리</span></a><a class="flex flex-col items-center justify-center gap-0.5 min-w-[56px] min-h-[44px] text-on-surface-variant hover:text-on-surface transition-colors" data-path="ergonomic-telemetry" href="#impact"><span class="material-symbols-outlined text-[22px]">monitoring</span><span class="font-label-data-sm text-label-data-sm">분석 지표</span></a><a class="flex flex-col items-center justify-center gap-0.5 min-w-[56px] min-h-[44px] text-on-surface-variant hover:text-on-surface transition-colors" data-path="enterprise-solutions" href="#solutions"><span class="material-symbols-outlined text-[22px]">corporate_fare</span><span class="font-label-data-sm text-label-data-sm">솔루션</span></a></div></nav>
 <!-- 꼿꼿 AI 챗봇: Supabase Edge Function(rag-search)으로 홈페이지 문서를 검색해 답변 -->
 <button id="chat-toggle" type="button" aria-label="꼿꼿 AI에게 질문하기" aria-expanded="false" aria-controls="chat-panel" class="fixed z-[60] right-4 bottom-20 md:right-6 md:bottom-6 w-14 h-14 rounded-full bg-primary-container text-on-primary flex items-center justify-center shadow-[0_8px_24px_rgba(37,99,235,0.35)] transition-all hover:bg-primary active:scale-95"><span class="material-symbols-outlined text-[26px]" id="chat-toggle-icon">chat</span></button>
 <section id="chat-panel" role="dialog" aria-label="꼿꼿 AI 챗봇" class="hidden fixed z-[60] inset-x-4 bottom-36 md:inset-x-auto md:right-6 md:bottom-24 md:w-[380px] h-[min(560px,calc(100dvh-11rem))] md:h-[min(600px,calc(100dvh-8rem))] flex-col rounded-xl bg-surface-container-lowest shadow-[0_12px_40px_rgba(11,28,48,0.18)] border border-outline-variant/60 overflow-hidden">
