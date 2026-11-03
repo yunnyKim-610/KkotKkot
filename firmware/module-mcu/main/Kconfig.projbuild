@@ -1,34 +1,120 @@
-menu "KkotKkot UWB (DW3000 계열)"
+# 메뉴 제목은 sdkconfig 주석으로 복사되므로 ASCII로만 쓴다 (Windows cp949에서 idf.py가 읽다가 실패함)
+menu "KkotKkot UWB (DW3000)"
 
     # 기본값은 ESP32-S3 SPI2(FSPI) IOMUX 핀. 스트래핑 핀(GPIO0, 3, 45, 46)은 쓰지 않는다.
 
+    config KKOT_UWB_ENABLE
+        bool "UWB 칩 사용 (끄면 SPI 확인·태그 처리를 하지 않음, 단독 테스트용)"
+        default y
+
     config KKOT_UWB_PIN_SCLK
         int "SPI SCLK GPIO"
+        depends on KKOT_UWB_ENABLE
         default 12
 
     config KKOT_UWB_PIN_MOSI
         int "SPI MOSI GPIO"
+        depends on KKOT_UWB_ENABLE
         default 11
 
     config KKOT_UWB_PIN_MISO
         int "SPI MISO GPIO"
+        depends on KKOT_UWB_ENABLE
         default 13
 
     config KKOT_UWB_PIN_CS
         int "SPI CS GPIO"
+        depends on KKOT_UWB_ENABLE
         default 10
 
     config KKOT_UWB_PIN_RST
         int "칩 RSTn GPIO (-1이면 사용 안 함, 오픈 드레인으로만 구동)"
+        depends on KKOT_UWB_ENABLE
         default 9
 
     config KKOT_UWB_SPI_SLOW_HZ
         int "초기(PLL 잠금 전) SPI 클럭 Hz"
+        depends on KKOT_UWB_ENABLE
         default 2000000
         range 100000 7000000
 
     config KKOT_UWB_PROBE_RETRY_MS
         int "칩을 못 찾았을 때 재시도 간격(ms)"
+        depends on KKOT_UWB_ENABLE
         default 2000
+
+endmenu
+
+menu "KkotKkot Jetson link"
+
+    choice KKOT_LINK
+        prompt "Jetson과 프레임을 주고받는 통로"
+        default KKOT_LINK_UART
+
+        config KKOT_LINK_UART
+            bool "UART1 (모듈 기판 배선, 운영 기본)"
+
+        config KKOT_LINK_USB_SERIAL_JTAG
+            bool "내장 USB-Serial-JTAG (USB 케이블, 단독 테스트용. 로그와 같은 통로)"
+    endchoice
+
+    config KKOT_LINK_UART_TX
+        int "UART1 TX GPIO"
+        depends on KKOT_LINK_UART
+        default 17
+
+    config KKOT_LINK_UART_RX
+        int "UART1 RX GPIO"
+        depends on KKOT_LINK_UART
+        default 18
+
+    config KKOT_LINK_UART_BAUD
+        int "UART1 속도"
+        depends on KKOT_LINK_UART
+        default 921600
+
+endmenu
+
+menu "KkotKkot status LED"
+
+    choice KKOT_STATUS_LED_TYPE
+        prompt "LED 종류"
+        default KKOT_STATUS_LED_WS2812
+
+        config KKOT_STATUS_LED_WS2812
+            bool "WS2812 RGB (DevKitC-1 등). 1단계 노랑, 2단계 빨강"
+
+        config KKOT_STATUS_LED_GPIO_PLAIN
+            bool "단색 LED (XIAO ESP32S3 등). 1단계 느린 깜빡임, 2단계 빠른 깜빡임"
+    endchoice
+
+    config KKOT_STATUS_LED_GPIO
+        int "LED GPIO (-1이면 사용 안 함. DevKitC-1 v1.0은 48, v1.1은 38, XIAO ESP32S3는 21)"
+        default 48
+
+    config KKOT_STATUS_LED_ACTIVE_LOW
+        bool "LOW일 때 켜짐 (XIAO ESP32S3 사용자 LED)"
+        depends on KKOT_STATUS_LED_GPIO_PLAIN
+        default n
+
+    config KKOT_STATUS_LED_BRIGHTNESS
+        int "밝기 (0~255, WS2812만)"
+        depends on KKOT_STATUS_LED_WS2812
+        range 0 255
+        default 40
+
+    config KKOT_ALERT_LED_MS
+        int "알림 한 번에 LED를 켜 두는 시간(ms)"
+        default 1500
+
+    config KKOT_ALERT_BLINK_SLOW_MS
+        int "단색 LED 1단계 깜빡임 주기(ms)"
+        depends on KKOT_STATUS_LED_GPIO_PLAIN
+        default 500
+
+    config KKOT_ALERT_BLINK_FAST_MS
+        int "단색 LED 2단계 깜빡임 주기(ms)"
+        depends on KKOT_STATUS_LED_GPIO_PLAIN
+        default 150
 
 endmenu

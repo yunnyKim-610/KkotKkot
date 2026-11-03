@@ -23,3 +23,6 @@ jobs:
       - name: 메시지 형식 테스트
         working-directory: module
         run: python -m pytest shared -q
+      - name: core 분석 대상 선택 테스트
+        working-directory: module/containers/core
+        run: python -m pytest tests -q

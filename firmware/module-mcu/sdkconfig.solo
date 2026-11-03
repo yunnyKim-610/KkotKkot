@@ -1,0 +1,10 @@
+# solo test overlay (README.md "단독 테스트" / docs/decisions.md #16). ASCII only: ESP-IDF reads this with the OS codepage on Windows.
+CONFIG_KKOT_UWB_ENABLE=n
+CONFIG_KKOT_LINK_USB_SERIAL_JTAG=y
+# USB-Serial-JTAG as the primary console so logs go through the same driver that receives frames
+CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG=y
+CONFIG_ESP_CONSOLE_SECONDARY_NONE=y
+# dev board: Seeed XIAO ESP32S3 (user LED GPIO21, single color, active low)
+CONFIG_KKOT_STATUS_LED_GPIO_PLAIN=y
+CONFIG_KKOT_STATUS_LED_GPIO=21
+CONFIG_KKOT_STATUS_LED_ACTIVE_LOW=y
