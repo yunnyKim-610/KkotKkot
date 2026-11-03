@@ -1,0 +1,5 @@
+numpy>=1.24
+opencv-python>=4.8
+ultralytics>=8.0      # YoloPoseBackend 사용 시 (다른 포즈 모델을 쓰면 생략 가능)
+pytest                # 테스트용
+# torch               # dataset.make_focal_loss 사용 시

@@ -1,0 +1,59 @@
+# 센싱 모듈 컨테이너 구성 (Jetson에서 실행: docker compose -f module/compose/docker-compose.yml up -d)
+# 시작 순서: mcu-bridge → core → vision → robot-bridge, telemetry
+# 원칙: vision 은 네트워크 차단, 외부 통신 컨테이너는 영상 접근 불가, 모두 비특권·읽기 전용
+x-common: &common
+  restart: always
+  read_only: true
+  security_opt: ["no-new-privileges:true"]
+  volumes:
+    - sockets:/run/kkotkkot
+
+services:
+  mcu-bridge:
+    <<: *common
+    build: { context: .., dockerfile: containers/mcu-bridge/Dockerfile }
+    network_mode: none
+    devices: ["/dev/ttyTHS1:/dev/ttyTHS1"]
+
+  core:
+    <<: *common
+    build: { context: .., dockerfile: containers/core/Dockerfile }
+    network_mode: none
+    depends_on: [mcu-bridge]
+    mem_limit: 512m
+
+  vision:
+    <<: *common
+    build: { context: .., dockerfile: containers/vision/Dockerfile }
+    network_mode: none            # 영상이 밖으로 나갈 길 자체를 없앤다
+    runtime: nvidia
+    depends_on: [core]
+    devices: ["/dev/bus/usb:/dev/bus/usb"]   # 깊이 카메라 (TODO: 장치 하나로 좁히기)
+    tmpfs: ["/tmp"]               # 임시 데이터는 메모리에만
+    volumes:
+      - sockets:/run/kkotkkot
+      - /opt/kkotkkot/models:/models:ro
+      - trt-cache:/cache/trt
+
+  robot-bridge:
+    <<: *common
+    build: { context: .., dockerfile: containers/robot-bridge/Dockerfile }
+    network_mode: host            # 로봇 이더넷(ROS2)만 사용
+    depends_on: [core]
+    mem_limit: 512m
+
+  telemetry:
+    <<: *common
+    build: { context: .., dockerfile: containers/telemetry/Dockerfile }
+    restart: on-failure
+    depends_on: [core]
+    env_file: [/opt/kkotkkot/device.env]   # SUPABASE_URL, DEVICE_TOKEN, DEVICE_ID (저장소에 넣지 말 것)
+    mem_limit: 256m
+    volumes:
+      - sockets:/run/kkotkkot
+      - telemetry-queue:/data
+
+volumes:
+  sockets:
+  trt-cache:
+  telemetry-queue:

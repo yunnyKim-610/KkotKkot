@@ -1,0 +1,39 @@
+# YOLO11s-pose 미세조정 설정 (대화에서 정한 초기값)
+# 2단계 학습: stage1(백본 고정) → stage2(전체 미세조정)
+common:
+  model: yolo11s-pose.pt
+  imgsz: 640
+  batch: 32
+  optimizer: AdamW
+  lr0: 0.001
+  lrf: 0.01
+  cos_lr: true
+  warmup_epochs: 3
+  weight_decay: 0.0005
+  # 증강
+  scale: 0.5
+  mosaic: 1.0
+  close_mosaic: 15
+  mixup: 0.0
+  degrees: 5
+  translate: 0.1
+  perspective: 0.0005
+  shear: 0.0
+  fliplr: 0.5
+  flipud: 0.0
+  hsv_v: 0.5
+  hsv_s: 0.6
+  hsv_h: 0.015
+  multi_scale: false
+stage1:
+  epochs: 30
+  freeze: 10
+stage2:
+  epochs: 150
+  patience: 30
+# 배포용 추론 설정 (검증 세트 정밀도-재현율 곡선을 보고 확정)
+deploy:
+  conf: 0.5
+  iou: 0.65
+  kpt_conf: 0.3
+  max_det: 10

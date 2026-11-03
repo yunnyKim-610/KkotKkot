@@ -1,3 +1,28 @@
 # API 키 등 비밀값
 .env
 .env.*
+
+# 기기 비밀값 (기기 토큰, Supabase 키)
+device.env
+*.pem
+*.key
+
+# 파이썬
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.ruff_cache/
+
+# 모델·데이터 (용량이 크고 개인 촬영 데이터 포함 가능)
+*.pt
+*.onnx
+*.engine
+runs/
+ml/datasets/*
+!ml/datasets/.gitkeep
+
+# ESP-IDF 빌드 결과
+firmware/**/build/
+firmware/**/sdkconfig
+firmware/**/sdkconfig.old

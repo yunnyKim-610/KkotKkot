@@ -1,0 +1,9 @@
+# 현장 포즈 데이터셋 (COCO-17 키포인트). 실제 이미지는 ml/datasets/ 아래에 두고 저장소에는 올리지 않는다.
+path: ../../datasets/kkotkkot-pose
+train: images/train
+val: images/val
+test: images/test        # 최종 평가 전까지 보지 않는다
+kpt_shape: [17, 3]       # (x, y, 보임 여부)
+flip_idx: [0, 2, 1, 4, 3, 6, 5, 8, 7, 10, 9, 12, 11, 14, 13, 16, 15]
+names:
+  0: person

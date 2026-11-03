@@ -1,0 +1,25 @@
+# 파이썬 코드 검사: 린트(ruff) + 테스트(pytest)
+name: ci
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: 의존성 설치
+        run: pip install numpy opencv-python-headless pyyaml pytest ruff==0.6.9
+      - name: 린트
+        run: ruff check module ml
+      - name: 전처리·후처리 테스트
+        working-directory: module/libs/posture_preprocess
+        run: python -m pytest tests -q
+      - name: 메시지 형식 테스트
+        working-directory: module
+        run: python -m pytest shared -q

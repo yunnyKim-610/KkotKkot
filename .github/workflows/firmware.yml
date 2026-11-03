@@ -1,0 +1,20 @@
+# ESP32-S3 보조 MCU 펌웨어 빌드 확인 (firmware 폴더가 바뀔 때만)
+name: firmware
+on:
+  push:
+    branches: [main]
+    paths: ["firmware/module-mcu/**", ".github/workflows/firmware.yml"]
+  pull_request:
+    paths: ["firmware/module-mcu/**", ".github/workflows/firmware.yml"]
+
+jobs:
+  esp32s3:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: ESP-IDF 빌드
+        uses: espressif/esp-idf-ci-action@v1
+        with:
+          esp_idf_version: v5.3
+          target: esp32s3
+          path: firmware/module-mcu
