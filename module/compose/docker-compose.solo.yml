@@ -1,0 +1,18 @@
+# 단독 테스트용 덮어쓰기 (개발자 혼자, 태그·UWB 없이 시험할 때만)
+#   docker compose -f module/compose/docker-compose.yml -f module/compose/docker-compose.solo.yml up -d
+# - core: 태그 매칭 없이 가장 가까운 1명만 분석, 알림은 예약 태그 0000 → ESP32 보드 LED
+# - mcu-bridge: ESP32-S3를 USB로 연결 (펌웨어는 sdkconfig.solo 로 빌드)
+# - telemetry: 시험 데이터가 통계에 섞이지 않도록 실행하지 않는다
+# 운영 기기에는 이 파일을 쓰지 않는다 (docs/decisions.md #16)
+services:
+  core:
+    environment:
+      KKOT_SOLO_TEST: "1"
+
+  mcu-bridge:
+    environment:
+      MCU_UART: /dev/ttyACM0
+    devices: !override ["/dev/ttyACM0:/dev/ttyACM0"]
+
+  telemetry:
+    profiles: ["disabled"]

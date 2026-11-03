@@ -24,6 +24,7 @@ ml/datasets/*
 
 # ESP-IDF 빌드 결과
 firmware/**/build/
+firmware/**/build-*/
 firmware/**/sdkconfig
 firmware/**/sdkconfig.old
 
