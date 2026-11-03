@@ -26,3 +26,10 @@ ml/datasets/*
 firmware/**/build/
 firmware/**/sdkconfig
 firmware/**/sdkconfig.old
+
+# YOLOE 데모가 실행 때 내려받는 모델·샘플 이미지
+code/yoloe/*.ts
+code/yoloe/bus.jpg
+
+# 개인별 Claude Code 설정
+**/.claude/settings.local.json
