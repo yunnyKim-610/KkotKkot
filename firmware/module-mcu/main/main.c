@@ -12,13 +12,37 @@
  */
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include <inttypes.h>
 #include "esp_log.h"
+#include "sdkconfig.h"
+#include "uwb_spi.h"
 
 static const char *TAG = "kkotkkot-mcu";
 
 static void power_task(void *arg)    { for (;;) { /* TODO: ADC 보정값으로 전압 측정 */ vTaskDelay(pdMS_TO_TICKS(5)); } }
 static void watchdog_task(void *arg) { for (;;) { /* TODO: 하트비트 3초 무응답 시 재시작 */ vTaskDelay(pdMS_TO_TICKS(100)); } }
-static void uwb_task(void *arg)      { for (;;) { /* TODO: UWB 드라이버 연동 */ vTaskDelay(pdMS_TO_TICKS(50)); } }
+static void uwb_task(void *arg)
+{
+    /* 1단계: SPI 배선·통신 확인. 칩을 찾을 때까지 주기적으로 DEV_ID를 읽는다. */
+    if (uwb_spi_init() != ESP_OK) {
+        ESP_LOGE(TAG, "UWB SPI 초기화 실패, uwb 태스크 중단");
+        vTaskDelete(NULL);
+    }
+    for (;;) {
+        uint32_t id = 0;
+        uwb_spi_hard_reset();
+        if (uwb_spi_read_dev_id(&id) == ESP_OK) {
+            const char *name = uwb_dev_id_name(id);
+            if (name) {
+                ESP_LOGI(TAG, "UWB 칩 확인: DEV_ID=0x%08" PRIX32 " (%s)", id, name);
+                break;
+            }
+            ESP_LOGW(TAG, "UWB 칩 응답 없음/알 수 없음: DEV_ID=0x%08" PRIX32 " (배선·전원 확인)", id);
+        }
+        vTaskDelay(pdMS_TO_TICKS(CONFIG_KKOT_UWB_PROBE_RETRY_MS));
+    }
+    for (;;) { /* TODO: UWB 드라이버 연동 (방향 측정) */ vTaskDelay(pdMS_TO_TICKS(50)); }
+}
 static void uart_task(void *arg)     { for (;;) { /* TODO: [0xAA][type][len][payload][crc16] */ vTaskDelay(pdMS_TO_TICKS(10)); } }
 static void can_task(void *arg)      { for (;;) { /* TODO: TWAI 수신·송신 */ vTaskDelay(pdMS_TO_TICKS(10)); } }
 
