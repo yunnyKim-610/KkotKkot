@@ -1,0 +1,7 @@
+easyocr
+rapidocr
+onnxruntime
+pytesseract
+matplotlib
+pillow
+numpy

@@ -1,0 +1,7 @@
+transformers>=4.47
+sentencepiece
+protobuf
+torch
+pillow
+matplotlib
+numpy
